@@ -16,7 +16,6 @@ class AmityReactionListComponent extends NewBaseComponent {
   final AmityReactionReferenceType referenceType;
   late int? reactionCount = 0;
 
-
   AmityReactionListComponent({
     Key? key,
     String? pageId,
@@ -52,8 +51,7 @@ class AmityReactionListComponent extends NewBaseComponent {
     final ScrollController scrollController = ScrollController();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
         context.read<ReactionListBloc>().add(ReactionListEventLoadMore());
       }
     });
@@ -83,10 +81,7 @@ class AmityReactionListComponent extends NewBaseComponent {
             },
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.only(
-                    top: index == 0
-                        ? 0.0
-                        : 0.0), // Change the value to adjust the padding
+                padding: EdgeInsets.only(top: index == 0 ? 0.0 : 0.0), // Change the value to adjust the padding
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
@@ -119,11 +114,8 @@ class AmityReactionListComponent extends NewBaseComponent {
   }
 
   Widget reactionTab() {
-    final tabTextStyle = TextStyle(
-        fontSize: 17.0,
-        color: theme.primaryColor,
-        fontFamily: 'SF Pro Text',
-        fontWeight: FontWeight.w600);
+    final tabTextStyle =
+        TextStyle(fontSize: 17.0, color: theme.primaryColor, fontFamily: 'SF Pro Text', fontWeight: FontWeight.w600);
     return Container(
       color: theme.backgroundColor,
       alignment: Alignment.centerLeft,
@@ -186,8 +178,7 @@ class AmityReactionListComponent extends NewBaseComponent {
     if (avatarUrl != null && avatarUrl.isNotEmpty) {
       return NetworkImage(avatarUrl);
     } else {
-      return const AssetImage("assets/images/user_placeholder.png",
-          package: "amity_uikit_beta_service");
+      return const AssetImage("assets/images/user_placeholder.png", package: "amity_uikit_beta_service");
     }
   }
 
@@ -215,9 +206,7 @@ class AmityReactionListComponent extends NewBaseComponent {
             SizedBox(
               height: double.infinity,
               child: SvgPicture.asset(
-                configProvider
-                    .getReaction(reaction.reactionName ?? "")
-                    .imagePath,
+                configProvider.getReaction(reaction.reactionName ?? "").imagePath,
                 package: 'amity_uikit_beta_service',
                 width: 24,
                 height: 24,
@@ -242,8 +231,7 @@ class AmityReactionListComponent extends NewBaseComponent {
           height: 32,
           child: AmityNetworkImage(
               imageUrl: reaction.creator?.avatarUrl,
-              placeHolderPath:
-                  "assets/Icons/amity_ic_user_avatar_placeholder.svg"),
+              placeHolderPath: "assets/Icons/amity_ic_user_avatar_placeholder.svg"),
         ),
       ),
     );
@@ -277,7 +265,7 @@ class AmityReactionListComponent extends NewBaseComponent {
         Expanded(
           child: Container(
             alignment: Alignment.topCenter,
-            child: Shimmer(
+            child: ShimmerV4(
               linearGradient: configProvider.getShimmerGradient(),
               child: ListView(
                 physics: true ? const NeverScrollableScrollPhysics() : null,
@@ -309,8 +297,7 @@ class AmityReactionListComponent extends NewBaseComponent {
             Container(
               width: 64,
               height: 56,
-              padding:
-                  const EdgeInsets.only(top: 8, left: 16, right: 8, bottom: 8),
+              padding: const EdgeInsets.only(top: 8, left: 16, right: 8, bottom: 8),
               child: const SkeletonImage(
                 height: 40,
                 width: 40,

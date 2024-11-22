@@ -1,4 +1,4 @@
-import 'package:amity_uikit_beta_service/v4/utils/Shimmer.dart';
+import 'package:amity_uikit_beta_service/v4/utils/shimmer.dart';
 import 'package:amity_uikit_beta_service/v4/utils/skeleton.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -10,25 +10,19 @@ class LoadingSkeleton extends StatelessWidget {
   const LoadingSkeleton({super.key, required this.context});
   Widget skeletonList() {
     return Container(
-      decoration: BoxDecoration(
-          color: Provider.of<AmityUIConfiguration>(context)
-              .appColors
-              .baseBackground),
+      decoration: BoxDecoration(color: Provider.of<AmityUIConfiguration>(context).appColors.baseBackground),
       child: Column(children: [
         Container(
-          color:
-              Provider.of<AmityUIConfiguration>(context).appColors.baseShade4,
+          color: Provider.of<AmityUIConfiguration>(context).appColors.baseShade4,
           height: 8,
         ),
         Expanded(
           child: Container(
             alignment: Alignment.topCenter,
-            child: Shimmer(
+            child: ShimmerV4(
               linearGradient: LinearGradient(
                 colors: [
-                  Provider.of<AmityUIConfiguration>(context)
-                      .appColors
-                      .baseShade4,
+                  Provider.of<AmityUIConfiguration>(context).appColors.baseShade4,
                   const Color(0xFFF4F4F4),
                   const Color(0xFFEBEBF4),
                 ],
@@ -45,9 +39,7 @@ class LoadingSkeleton extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 separatorBuilder: (context, index) {
                   return Divider(
-                    color: Provider.of<AmityUIConfiguration>(context)
-                        .appColors
-                        .baseShade4,
+                    color: Provider.of<AmityUIConfiguration>(context).appColors.baseShade4,
                     thickness: 8,
                     height: 24,
                   );
@@ -90,22 +82,19 @@ class LoadingSkeleton extends StatelessWidget {
                 Container(
                   width: 48,
                   height: 60,
-                  padding: const EdgeInsets.only(
-                      top: 12, left: 0, right: 8, bottom: 8),
+                  padding: const EdgeInsets.only(top: 12, left: 0, right: 8, bottom: 8),
                   child: const SkeletonImage(
                     height: 40,
                     width: 40,
                     borderRadius: 40,
                   ),
                 ),
-                const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 6.0),
-                      SkeletonText(width: 120),
-                      SizedBox(height: 12.0),
-                      SkeletonText(width: 88),
-                    ]),
+                const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  SizedBox(height: 6.0),
+                  SkeletonText(width: 120),
+                  SizedBox(height: 12.0),
+                  SkeletonText(width: 88),
+                ]),
               ],
             ),
             const SizedBox(height: 14.0),

@@ -8,7 +8,7 @@ import 'package:amity_uikit_beta_service/v4/social/post/amity_post_content_compo
 import 'package:amity_uikit_beta_service/v4/social/post/common/post_action.dart';
 import 'package:amity_uikit_beta_service/v4/social/post/post_detail/bloc/post_detail_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/post/post_item/bloc/post_item_bloc.dart';
-import 'package:amity_uikit_beta_service/v4/utils/Shimmer.dart';
+import 'package:amity_uikit_beta_service/v4/utils/shimmer.dart';
 import 'package:amity_uikit_beta_service/v4/utils/skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,8 +29,7 @@ class AmityPostDetailPage extends NewBasePage {
   Widget buildPage(BuildContext context) {
     return BlocProvider(
       create: (context) => PostDetailBloc(postId: postId, post: post),
-      child: BlocBuilder<PostDetailBloc, PostDetailState>(
-          builder: (context, state) {
+      child: BlocBuilder<PostDetailBloc, PostDetailState>(builder: (context, state) {
         return Scaffold(
           backgroundColor: theme.backgroundColor,
           body: buildPostDetail(context, state),
@@ -41,8 +40,7 @@ class AmityPostDetailPage extends NewBasePage {
 
   Widget buildPostDetail(BuildContext context, PostDetailState state) {
     if (state is PostDetailStateInitial) {
-      context.read<PostDetailBloc>().add(
-          PostDetailLoad(postId: (state as PostDetailStateInitial).postId));
+      context.read<PostDetailBloc>().add(PostDetailLoad(postId: (state as PostDetailStateInitial).postId));
       return Container(
           padding: const EdgeInsets.only(top: 74),
           decoration: BoxDecoration(color: theme.backgroundColor),
@@ -50,17 +48,13 @@ class AmityPostDetailPage extends NewBasePage {
     } else if (state is PostDetailStateError) {
       return Text(state.message);
     } else if (state is PostDetailStateLoaded) {
-      return renderPage(
-          context: context, post: state.post, replyTo: state.replyTo);
+      return renderPage(context: context, post: state.post, replyTo: state.replyTo);
     } else {
       return Container();
     }
   }
 
-  Widget renderPage(
-      {required BuildContext context,
-      required AmityPost post,
-      AmityComment? replyTo}) {
+  Widget renderPage({required BuildContext context, required AmityPost post, AmityComment? replyTo}) {
     ScrollController scrollController = ScrollController();
     return BlocProvider(
       create: (context) => PostItemBloc(),
@@ -96,11 +90,8 @@ class AmityPostDetailPage extends NewBasePage {
                     referenceId: postId,
                     referenceType: AmityCommentReferenceType.POST,
                     parentScrollController: scrollController,
-                    commentAction:
-                        CommentAction(onReply: (AmityComment? comment) {
-                      context
-                          .read<PostDetailBloc>()
-                          .add(PostDetailReplyComment(replyTo: comment));
+                    commentAction: CommentAction(onReply: (AmityComment? comment) {
+                      context.read<PostDetailBloc>().add(PostDetailReplyComment(replyTo: comment));
                     }),
                   ),
                 ),
@@ -117,9 +108,7 @@ class AmityPostDetailPage extends NewBasePage {
                   referenceType: AmityCommentReferenceType.POST,
                   replyTo: replyTo,
                   action: CommentCreatorAction(onDissmiss: () {
-                    context
-                        .read<PostDetailBloc>()
-                        .add(const PostDetailReplyComment(replyTo: null));
+                    context.read<PostDetailBloc>().add(const PostDetailReplyComment(replyTo: null));
                   }),
                 ),
               ],
@@ -156,7 +145,7 @@ class AmityPostDetailPage extends NewBasePage {
   }
 
   Widget showShimmerContent() {
-    return Shimmer(
+    return ShimmerV4(
       linearGradient: configProvider.getShimmerGradient(),
       child: ShimmerLoading(
         isLoading: true,
@@ -172,22 +161,19 @@ class AmityPostDetailPage extends NewBasePage {
                     Container(
                       width: 48,
                       height: 60,
-                      padding: const EdgeInsets.only(
-                          top: 12, left: 0, right: 8, bottom: 8),
+                      padding: const EdgeInsets.only(top: 12, left: 0, right: 8, bottom: 8),
                       child: const SkeletonImage(
                         height: 40,
                         width: 40,
                         borderRadius: 40,
                       ),
                     ),
-                    const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 6.0),
-                          SkeletonText(width: 120),
-                          SizedBox(height: 12.0),
-                          SkeletonText(width: 88),
-                        ]),
+                    const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      SizedBox(height: 6.0),
+                      SkeletonText(width: 120),
+                      SizedBox(height: 12.0),
+                      SkeletonText(width: 88),
+                    ]),
                   ],
                 ),
                 const SizedBox(height: 14.0),

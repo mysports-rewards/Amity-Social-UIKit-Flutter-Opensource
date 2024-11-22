@@ -4,8 +4,8 @@ import 'package:amity_uikit_beta_service/v4/social/my_community/my_community_com
 import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_composer_model.dart';
 import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_composer_page.dart';
 import 'package:amity_uikit_beta_service/v4/social/post_target_selection_page/bloc/post_target_selection_bloc.dart';
-import 'package:amity_uikit_beta_service/v4/utils/Shimmer.dart';
 import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
+import 'package:amity_uikit_beta_service/v4/utils/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,17 +19,12 @@ class PostTargetSelectionPage extends NewBasePage {
     return BlocProvider(
       create: (context) => PostTargetSelectionBloc(),
       child: Builder(builder: (context) {
-        context
-            .read<PostTargetSelectionBloc>()
-            .add(PostTargetSelectionEventInitial());
+        context.read<PostTargetSelectionBloc>().add(PostTargetSelectionEventInitial());
 
         scrollController.addListener(
           () {
-            if (scrollController.position.pixels ==
-                scrollController.position.maxScrollExtent) {
-              context
-                  .read<PostTargetSelectionBloc>()
-                  .add(PostTargetSelectionEventLoadMore());
+            if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+              context.read<PostTargetSelectionBloc>().add(PostTargetSelectionEventLoadMore());
             }
           },
         );
@@ -50,8 +45,7 @@ class PostTargetSelectionPage extends NewBasePage {
                     package: 'amity_uikit_beta_service',
                     width: 24,
                     height: 24,
-                    colorFilter:
-                        ColorFilter.mode(theme.baseColor, BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(theme.baseColor, BlendMode.srcIn),
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -68,13 +62,11 @@ class PostTargetSelectionPage extends NewBasePage {
                     ListTile(
                       onTap: () {
                         final createOptions =
-                            AmityPostComposerOptions.createOptions(
-                                targetType: AmityPostTargetType.USER);
+                            AmityPostComposerOptions.createOptions(targetType: AmityPostTargetType.USER);
                         // Navigate or perform action based on 'Global Feed' tap
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
                               const begin = Offset(1.0, 0.0);
                               const end = Offset.zero;
                               const curve = Curves.ease;
@@ -91,9 +83,7 @@ class PostTargetSelectionPage extends NewBasePage {
                               );
                             },
                             reverseTransitionDuration: Duration.zero,
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    PopScope(
+                            pageBuilder: (context, animation, secondaryAnimation) => PopScope(
                               canPop: true,
                               child: PostComposerPage(
                                 options: createOptions,
@@ -113,17 +103,12 @@ class PostTargetSelectionPage extends NewBasePage {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(40),
                           child: AmityNetworkImage(
-                              imageUrl:
-                                  AmityCoreClient.getCurrentUser().avatarUrl,
-                              placeHolderPath:
-                                  "assets/Icons/amity_ic_user_avatar_placeholder.svg"),
+                              imageUrl: AmityCoreClient.getCurrentUser().avatarUrl,
+                              placeHolderPath: "assets/Icons/amity_ic_user_avatar_placeholder.svg"),
                         ),
                       ),
                       title: Text('My timeline',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              color: theme.baseColor)),
+                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: theme.baseColor)),
                     ),
                     const SizedBox(
                       height: 8,
@@ -197,14 +182,11 @@ class PostTargetSelectionPage extends NewBasePage {
     return ListTile(
       onTap: () {
         final createOptions = AmityPostComposerOptions.createOptions(
-            targetId: community.communityId,
-            community: community,
-            targetType: AmityPostTargetType.COMMUNITY);
+            targetId: community.communityId, community: community, targetType: AmityPostTargetType.COMMUNITY);
         // Navigate or perform action based on 'Global Feed' tap
         Navigator.of(context).push(
           PageRouteBuilder(
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
               const begin = Offset(1.0, 0.0);
               const end = Offset.zero;
               const curve = Curves.ease;
@@ -240,8 +222,7 @@ class PostTargetSelectionPage extends NewBasePage {
         child: SizedBox(
           width: 40,
           height: 40,
-          child: CommunityImageAvatarElement(
-              avatarUrl: community.avatarImage?.fileUrl, elementId: ''),
+          child: CommunityImageAvatarElement(avatarUrl: community.avatarImage?.fileUrl, elementId: ''),
         ),
       ),
       title: Row(
@@ -293,7 +274,7 @@ class PostTargetSelectionPage extends NewBasePage {
       child: Column(children: [
         Container(
           alignment: Alignment.topCenter,
-          child: Shimmer(
+          child: ShimmerV4(
             linearGradient: configProvider.getShimmerGradient(),
             child: ListView.separated(
               shrinkWrap: true,
@@ -342,8 +323,7 @@ class PostTargetSelectionPage extends NewBasePage {
           Container(
             width: 64,
             height: 56,
-            padding:
-                const EdgeInsets.only(top: 8, left: 16, right: 8, bottom: 8),
+            padding: const EdgeInsets.only(top: 8, left: 16, right: 8, bottom: 8),
             child: Container(
               width: 40,
               height: 40,

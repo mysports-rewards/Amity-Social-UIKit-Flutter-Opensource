@@ -14,7 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class AmityGlobalFeedComponent extends NewBaseComponent {
-  AmityGlobalFeedComponent({Key? key, String? pageId}) : super(key: key, pageId: pageId, componentId: 'global_feed_component');
+  AmityGlobalFeedComponent({Key? key, String? pageId})
+      : super(key: key, pageId: pageId, componentId: 'global_feed_component');
 
   List<String> viewedPost = [];
 
@@ -63,7 +64,11 @@ class AmityGlobalFeedComponent extends NewBaseComponent {
                         itemBuilder: (context, index) {
                           final amityPost = state.list[index];
 
-                          if (((amityPost.children?.isNotEmpty ?? false) && (amityPost.children!.first.type == AmityDataType.FILE || amityPost.children!.first.type == AmityDataType.POLL || amityPost.children!.first.type == AmityDataType.LIVESTREAM)) || (amityPost.isDeleted ?? false)) {
+                          if (((amityPost.children?.isNotEmpty ?? false) &&
+                                  (amityPost.children!.first.type == AmityDataType.FILE ||
+                                      amityPost.children!.first.type == AmityDataType.POLL ||
+                                      amityPost.children!.first.type == AmityDataType.LIVESTREAM)) ||
+                              (amityPost.isDeleted ?? false)) {
                             return Container();
                           } else {
                             return BlocProvider(
@@ -108,7 +113,9 @@ class AmityGlobalFeedComponent extends NewBaseComponent {
                       height: double.infinity,
                       color: theme.backgroundColor,
                       alignment: Alignment.center,
-                      child: state.isFetching ? const CircularProgressIndicator() : AmityEmptyNewsFeedComponent(elementId: "amity_empty_newsfeed_component"),
+                      child: state.isFetching
+                          ? const CircularProgressIndicator()
+                          : AmityEmptyNewsFeedComponent(elementId: "amity_empty_newsfeed_component"),
                     ),
                   ),
                 if (state.isFetching && state.list.isNotEmpty)
@@ -137,7 +144,7 @@ class AmityGlobalFeedComponent extends NewBaseComponent {
         Expanded(
           child: Container(
             alignment: Alignment.topCenter,
-            child: Shimmer(
+            child: ShimmerV4(
               linearGradient: configProvider.getShimmerGradient(),
               child: ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),

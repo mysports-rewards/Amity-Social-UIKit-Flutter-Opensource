@@ -27,8 +27,7 @@ class CommentList extends NewBaseComponent with ChangeNotifier {
       builder: (context, state) {
         final commentCount = state.comments.length;
         if (state is CommentListStateInitial) {
-          context.read<CommentListBloc>().add(CommentListEventRefresh(
-              toastBloc: context.read<AmityToastBloc>()));
+          context.read<CommentListBloc>().add(CommentListEventRefresh(toastBloc: context.read<AmityToastBloc>()));
         }
         if (state.isFetching && state.comments.isEmpty) {
           return SliverList(
@@ -36,7 +35,7 @@ class CommentList extends NewBaseComponent with ChangeNotifier {
               (context, index) {
                 return SizedBox(
                   width: double.infinity,
-                  child: Shimmer(
+                  child: ShimmerV4(
                     linearGradient: configProvider.getShimmerGradient(),
                     child: const ShimmerLoading(
                       isLoading: true,
@@ -54,10 +53,8 @@ class CommentList extends NewBaseComponent with ChangeNotifier {
           );
         } else {
           scrollController.addListener(() {
-            if ((scrollController.position.pixels ==
-                (scrollController.position.maxScrollExtent))) {
-              context.read<CommentListBloc>().add(CommentListEventLoadMore(
-                  toastBloc: context.read<AmityToastBloc>()));
+            if ((scrollController.position.pixels == (scrollController.position.maxScrollExtent))) {
+              context.read<CommentListBloc>().add(CommentListEventLoadMore(toastBloc: context.read<AmityToastBloc>()));
             }
           });
           return SliverList(
@@ -65,8 +62,7 @@ class CommentList extends NewBaseComponent with ChangeNotifier {
               (context, index) {
                 if (index < state.comments.length) {
                   final comment = state.comments[index];
-                  final isExpanded =
-                      state.expandedId.contains(comment.commentId);
+                  final isExpanded = state.expandedId.contains(comment.commentId);
                   return BlocProvider(
                     key: ValueKey(
                         "${comment.commentId}_${isExpanded}_${comment.childrenNumber}_${comment.isFlaggedByMe}"),

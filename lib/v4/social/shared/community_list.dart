@@ -15,8 +15,7 @@ Widget communityList(
   void Function() loadMore,
 ) {
   scrollController.addListener(() {
-    if (scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent) {
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
       loadMore();
     }
   });
@@ -53,10 +52,8 @@ Widget communityList(
   );
 }
 
-Widget communityRow(
-    BuildContext context, AmityCommunity community, AmityThemeColor theme) {
-  var categoriesName =
-      community.categories?.map((category) => category?.name).toList();
+Widget communityRow(BuildContext context, AmityCommunity community, AmityThemeColor theme) {
+  var categoriesName = community.categories?.map((category) => category?.name).toList();
 
   return GestureDetector(
     onTap: () {
@@ -129,13 +126,12 @@ Widget communityRow(
   );
 }
 
-Widget communitySkeletonList(
-    AmityThemeColor theme, ConfigProvider configProvider) {
+Widget communitySkeletonList(AmityThemeColor theme, ConfigProvider configProvider) {
   return Container(
     decoration: BoxDecoration(color: theme.backgroundColor),
     child: Container(
       alignment: Alignment.topCenter,
-      child: Shimmer(
+      child: ShimmerV4(
         linearGradient: configProvider.getShimmerGradient(),
         child: ListView.separated(
           physics: const NeverScrollableScrollPhysics(),

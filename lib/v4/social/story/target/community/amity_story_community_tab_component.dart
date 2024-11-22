@@ -11,7 +11,7 @@ import 'package:amity_uikit_beta_service/v4/utils/config_provider_widget.dart';
 import 'package:amity_uikit_beta_service/v4/utils/create_story/bloc/create_story_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:shimmer/shimmer.dart' as shimmer;
 
 import '../../view/amity_view_story_page_type.dart';
 
@@ -60,7 +60,9 @@ class _AmityStoryCommunityTabBuilderState extends State<AmityStoryCommunityTabBu
     return BlocListener<CreateStoryBloc, CreateStoryState>(
       listener: (context, state) {
         if (state is CreateStorySuccess) {
-          context.read<AmityToastBloc>().add(const AmityToastShort(message: "Successfully shared story", icon: AmityToastIcon.success));
+          context
+              .read<AmityToastBloc>()
+              .add(const AmityToastShort(message: "Successfully shared story", icon: AmityToastIcon.success));
         }
       },
       child: BlocBuilder<CommunityFeedStoryBloc, CommunityFeedStoryState>(
@@ -71,7 +73,7 @@ class _AmityStoryCommunityTabBuilderState extends State<AmityStoryCommunityTabBu
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Shimmer.fromColors(
+                  shimmer.Shimmer.fromColors(
                     baseColor: const Color.fromARGB(255, 243, 242, 242),
                     highlightColor: const Color.fromARGB(255, 225, 225, 225),
                     child: Container(
@@ -81,10 +83,13 @@ class _AmityStoryCommunityTabBuilderState extends State<AmityStoryCommunityTabBu
                     ),
                   ),
                   const SizedBox(height: 5),
-                  Shimmer.fromColors(
+                  shimmer.Shimmer.fromColors(
                     baseColor: const Color.fromARGB(255, 243, 242, 242),
                     highlightColor: const Color.fromARGB(255, 225, 225, 225),
-                    child: Container(width: 80, height: 10, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10))),
+                    child: Container(
+                        width: 80,
+                        height: 10,
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10))),
                   ),
                 ],
               ),

@@ -25,19 +25,16 @@ class AmityUserSearchResultComponent extends NewBaseComponent {
       } else {
         return Center(
           child: Column(
-            mainAxisSize:
-                MainAxisSize.min, // Centers the children within the column
+            mainAxisSize: MainAxisSize.min, // Centers the children within the column
             children: [
               SvgPicture.asset(
                 'assets/Icons/amity_ic_search_not_found.svg',
                 package: 'amity_uikit_beta_service',
-                colorFilter:
-                    ColorFilter.mode(theme.baseColorShade4, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(theme.baseColorShade4, BlendMode.srcIn),
                 width: 47,
                 height: 47,
               ),
-              const SizedBox(
-                  height: 10), // Optional spacing between icon and text
+              const SizedBox(height: 10), // Optional spacing between icon and text
               Text(
                 'No results found',
                 style: TextStyle(
@@ -60,8 +57,7 @@ class AmityUserSearchResultComponent extends NewBaseComponent {
 
   Widget getUserList(BuildContext context, List<AmityUser> users) {
     viewModel.scrollController.addListener(() {
-      if (viewModel.scrollController.position.pixels ==
-          viewModel.scrollController.position.maxScrollExtent) {
+      if (viewModel.scrollController.position.pixels == viewModel.scrollController.position.maxScrollExtent) {
         viewModel.onLoadMore?.call();
       }
     });
@@ -142,9 +138,7 @@ class AmityUserSearchResultComponent extends NewBaseComponent {
           width: 40,
           height: 40,
           child: AmityNetworkImage(
-              imageUrl: user.avatarUrl,
-              placeHolderPath:
-                  "assets/Icons/amity_ic_user_avatar_placeholder.svg"),
+              imageUrl: user.avatarUrl, placeHolderPath: "assets/Icons/amity_ic_user_avatar_placeholder.svg"),
         ),
       ),
     );
@@ -176,7 +170,7 @@ class AmityUserSearchResultComponent extends NewBaseComponent {
         Expanded(
           child: Container(
             alignment: Alignment.topCenter,
-            child: Shimmer(
+            child: ShimmerV4(
               linearGradient: configProvider.getShimmerGradient(),
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
@@ -208,8 +202,7 @@ class AmityUserSearchResultComponent extends NewBaseComponent {
             Container(
               width: 64,
               height: 56,
-              padding:
-                  const EdgeInsets.only(top: 8, left: 16, right: 8, bottom: 8),
+              padding: const EdgeInsets.only(top: 8, left: 16, right: 8, bottom: 8),
               child: const SkeletonImage(
                 height: 40,
                 width: 40,

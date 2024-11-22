@@ -10,7 +10,8 @@ import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:shimmer/shimmer.dart' as shimmer;
+// import 'package:shimmer/shimmer.shimmer.dart' as shimmer;
 
 class AmityStoryHeaderRow extends StatelessWidget {
   final AmityStory? story;
@@ -58,7 +59,9 @@ class AmityStoryHeaderRow extends StatelessWidget {
                   shouldRestart: shouldRestartTimer,
                   totalSegments: totalSegments,
                   currentSegment: currentSegment,
-                  duration: story!.dataType == AmityStoryDataType.VIDEO ? (AmityStorySingleSegmentTimerElement.totalValue + 1) : 7,
+                  duration: story!.dataType == AmityStoryDataType.VIDEO
+                      ? (AmityStorySingleSegmentTimerElement.totalValue + 1)
+                      : 7,
                   moveToNextSegment: () {
                     moveToNextSegment();
                   },
@@ -100,7 +103,7 @@ class AmityStoryHeaderRow extends StatelessWidget {
                             ],
                           ),
                         )
-                      : Shimmer.fromColors(
+                      : shimmer.Shimmer.fromColors(
                           baseColor: const Color.fromARGB(255, 49, 49, 49),
                           highlightColor: const Color.fromARGB(255, 80, 80, 80),
                           child: Container(
@@ -133,10 +136,11 @@ class AmityStoryHeaderRow extends StatelessWidget {
                                     fontFamily: "SF Pro Text",
                                   ),
                                 ),
-                                (state.community?.isOfficial != null && state.community?.isOfficial == true)?
-                                const SizedBox(
-                                  width: 5,
-                                ):const SizedBox(),
+                                (state.community?.isOfficial != null && state.community?.isOfficial == true)
+                                    ? const SizedBox(
+                                        width: 5,
+                                      )
+                                    : const SizedBox(),
                                 (state.community?.isOfficial != null && state.community?.isOfficial == true)
                                     ? SvgPicture.asset(
                                         "assets/Icons/ic_verified_white.svg",
@@ -188,7 +192,7 @@ class AmityStoryHeaderRow extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Shimmer.fromColors(
+                              shimmer.Shimmer.fromColors(
                                 baseColor: const Color.fromARGB(255, 49, 49, 49),
                                 highlightColor: const Color.fromARGB(255, 80, 80, 80),
                                 child: Container(
@@ -205,7 +209,7 @@ class AmityStoryHeaderRow extends StatelessWidget {
                               const SizedBox(
                                 height: 5,
                               ),
-                              Shimmer.fromColors(
+                              shimmer.Shimmer.fromColors(
                                 baseColor: const Color.fromARGB(255, 49, 49, 49),
                                 highlightColor: const Color.fromARGB(255, 80, 80, 80),
                                 child: Container(
@@ -242,14 +246,18 @@ class AmityStoryHeaderRow extends StatelessWidget {
                                       ConfirmationDialog().show(
                                         context: context,
                                         title: 'Delete this story?',
-                                        detailText: 'This story will be permanently deleted.\n You’ll no longer to see and find this story',
+                                        detailText:
+                                            'This story will be permanently deleted.\n You’ll no longer to see and find this story',
                                         leftButtonText: 'Cancel',
                                         rightButtonText: 'Delete',
                                         onConfirm: () {
-                                          BlocProvider.of<ViewStoryBloc>(context).add(DeleteStoryEvent(storyId: storyId));
-                                          BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: false));
+                                          BlocProvider.of<ViewStoryBloc>(context)
+                                              .add(DeleteStoryEvent(storyId: storyId));
+                                          BlocProvider.of<ViewStoryBloc>(context)
+                                              .add(ShoudPauseEvent(shouldPause: false));
                                           if (story!.dataType == AmityStoryDataType.VIDEO) {
-                                            BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PlayStoryVideoEvent());
+                                            BlocProvider.of<StoryVideoPlayerBloc>(context)
+                                                .add(const PlayStoryVideoEvent());
                                           }
                                           onStoryDelete();
                                         },
@@ -291,7 +299,8 @@ class AmityStoryHeaderRow extends StatelessWidget {
 
   Widget getProfileIcon(AmityCommunity? community) {
     if (community == null) {
-      return const AmityNetworkImage(imageUrl: "", placeHolderPath: "assets/Icons/amity_ic_community_avatar_placeholder.svg");
+      return const AmityNetworkImage(
+          imageUrl: "", placeHolderPath: "assets/Icons/amity_ic_community_avatar_placeholder.svg");
     }
 
     return community.avatarImage != null

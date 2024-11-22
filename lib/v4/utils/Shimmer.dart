@@ -1,13 +1,11 @@
-
-
 import 'package:flutter/material.dart';
 
-class Shimmer extends StatefulWidget {
-  static ShimmerState? of(BuildContext context) {
-    return context.findAncestorStateOfType<ShimmerState>();
+class ShimmerV4 extends StatefulWidget {
+  static ShimmerV4State? of(BuildContext context) {
+    return context.findAncestorStateOfType<ShimmerV4State>();
   }
 
-  const Shimmer({
+  const ShimmerV4({
     super.key,
     required this.linearGradient,
     this.child,
@@ -17,10 +15,10 @@ class Shimmer extends StatefulWidget {
   final Widget? child;
 
   @override
-  ShimmerState createState() => ShimmerState();
+  ShimmerV4State createState() => ShimmerV4State();
 }
 
-class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
+class ShimmerV4State extends State<ShimmerV4> with SingleTickerProviderStateMixin {
   late AnimationController _shimmerController;
 
   @override
@@ -42,12 +40,10 @@ class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
         stops: widget.linearGradient.stops,
         begin: widget.linearGradient.begin,
         end: widget.linearGradient.end,
-        transform:
-            _SlidingGradientTransform(slidePercent: _shimmerController.value),
+        transform: _SlidingGradientTransform(slidePercent: _shimmerController.value),
       );
 
-  bool get isSized =>
-      (context.findRenderObject() as RenderBox?)?.hasSize ?? false;
+  bool get isSized => (context.findRenderObject() as RenderBox?)?.hasSize ?? false;
 
   Size get size => (context.findRenderObject() as RenderBox).size;
 
@@ -103,7 +99,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
     if (_shimmerChanges != null) {
       _shimmerChanges!.removeListener(_onShimmerChange);
     }
-    _shimmerChanges = Shimmer.of(context)?.shimmerChanges;
+    _shimmerChanges = ShimmerV4.of(context)?.shimmerChanges;
     if (_shimmerChanges != null) {
       _shimmerChanges!.addListener(_onShimmerChange);
     }
@@ -130,7 +126,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
     }
 
     // Collect ancestor shimmer info.
-    final shimmer = Shimmer.of(context)!;
+    final shimmer = ShimmerV4.of(context)!;
     if (!shimmer.isSized) {
       // The ancestor Shimmer widget has not laid
       // itself out yet. Return an empty box.

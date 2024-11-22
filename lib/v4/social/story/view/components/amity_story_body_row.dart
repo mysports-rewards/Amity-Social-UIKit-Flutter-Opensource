@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/social/story/hyperlink/elements/amity_story_hyperlink_view.dart';
@@ -13,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:shimmer/shimmer.dart' as shimmer;
 import 'package:video_player/video_player.dart';
 
 class AmityStoryBodyRow extends StatefulWidget {
@@ -28,7 +27,18 @@ class AmityStoryBodyRow extends StatefulWidget {
   final Function onSwipeDown;
   final Function(HyperLink)? onHyperlinkClick;
 
-  AmityStoryBodyRow({super.key, required this.dataType, required this.data, required this.state, required this.items, required this.isVisible, required this.onTap, required this.onHold, required this.onSwipeUp, required this.onSwipeDown, this.onHyperlinkClick});
+  AmityStoryBodyRow(
+      {super.key,
+      required this.dataType,
+      required this.data,
+      required this.state,
+      required this.items,
+      required this.isVisible,
+      required this.onTap,
+      required this.onHold,
+      required this.onSwipeUp,
+      required this.onSwipeDown,
+      this.onHyperlinkClick});
 
   @override
   State<AmityStoryBodyRow> createState() => _AmityStoryBodyRowState();
@@ -104,7 +114,8 @@ class _AmityStoryBodyRowState extends State<AmityStoryBodyRow> {
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: AmityStoryBodyHyperlinkView(hyperlinkItem: widget.items.first as HyperLink, onHyperlinkClick: widget.onHyperlinkClick!),
+                      child: AmityStoryBodyHyperlinkView(
+                          hyperlinkItem: widget.items.first as HyperLink, onHyperlinkClick: widget.onHyperlinkClick!),
                     ),
                   )
                 : Container(),
@@ -152,7 +163,10 @@ class _AmityStoryBodyRowState extends State<AmityStoryBodyRow> {
         if (!widget.isVisible) {
           BlocProvider.of<StoryVideoPlayerBloc>(context).add(const PauseStoryVideoEvent());
         }
-        return AmityStoryBodyVideoView(data: widget.data as VideoStoryData, syncState: widget.state, videoPlayerController: AmityViewCommunityStoryPage.videoPlayerController);
+        return AmityStoryBodyVideoView(
+            data: widget.data as VideoStoryData,
+            syncState: widget.state,
+            videoPlayerController: AmityViewCommunityStoryPage.videoPlayerController);
 
       default:
         return Container();
@@ -203,7 +217,6 @@ class _AmityStoryBodyImageViewState extends State<AmityStoryBodyImageView> {
       _dominantColor = _paletteGenerator.vibrantColor?.color.withOpacity(0.7) ?? Colors.black;
       _vibrantColor = _paletteGenerator.darkVibrantColor?.color.withOpacity(0.7) ?? Colors.white;
     });
-    
   }
 
   @override
@@ -235,10 +248,10 @@ class _AmityStoryBodyImageViewState extends State<AmityStoryBodyImageView> {
                 )
               : CachedNetworkImage(
                   progressIndicatorBuilder: (context, url, progress) {
-                    return Shimmer.fromColors(
+                    return shimmer.Shimmer.fromColors(
                       baseColor: const Color(0xff292b32),
                       highlightColor: const Color(0xff3c3e48),
-                      direction: ShimmerDirection.ttb,
+                      direction: shimmer.ShimmerDirection.ttb,
                       child: Container(
                         height: double.infinity,
                         width: double.infinity,
@@ -252,7 +265,9 @@ class _AmityStoryBodyImageViewState extends State<AmityStoryBodyImageView> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: imageProvider,
-                          fit: widget.data.imageDisplayMode == AmityStoryImageDisplayMode.FILL ? BoxFit.cover : BoxFit.contain,
+                          fit: widget.data.imageDisplayMode == AmityStoryImageDisplayMode.FILL
+                              ? BoxFit.cover
+                              : BoxFit.contain,
                         ),
                       ),
                     );
@@ -277,7 +292,8 @@ class AmityStoryBodyVideoView extends StatelessWidget {
       height: double.infinity,
       child: AmityStoryVideoPlayer(
         showVolumeControl: true,
-        video: (data.video.hasLocalPreview != null && data.video.hasLocalPreview!) ? File(data.video.getFilePath!) : null,
+        video:
+            (data.video.hasLocalPreview != null && data.video.hasLocalPreview!) ? File(data.video.getFilePath!) : null,
         onInitializing: () {
           AmityStorySingleSegmentTimerElement.currentValue = -1;
           BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: true));
@@ -287,7 +303,8 @@ class AmityStoryBodyVideoView extends StatelessWidget {
         },
         url: (data.video.hasLocalPreview != null && data.video.hasLocalPreview!) ? null : data.video.fileUrl!,
         onInitialize: () {
-          AmityStorySingleSegmentTimerElement.totalValue = BlocProvider.of<StoryVideoPlayerBloc>(context).state.duration;
+          AmityStorySingleSegmentTimerElement.totalValue =
+              BlocProvider.of<StoryVideoPlayerBloc>(context).state.duration;
           BlocProvider.of<ViewStoryBloc>(context).add(ShoudPauseEvent(shouldPause: false));
         },
         onPause: () {},
