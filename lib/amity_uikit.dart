@@ -65,14 +65,10 @@ class AmityUIKit {
 
     switch (region) {
       case AmityEndpointRegion.custom:
-        if (customEndpoint != null &&
-            customMqttEndpoint != null &&
-            customSocketEndpoint != null) {
+        if (customEndpoint != null && customMqttEndpoint != null && customSocketEndpoint != null) {
           amityEndpoint = AmityRegionalHttpEndpoint.custom(customEndpoint);
-          amityMqttEndpoint =
-              AmityRegionalMqttEndpoint.custom(customMqttEndpoint);
-          amitySocketEndpoint =
-              AmityRegionalSocketEndpoint.custom(customSocketEndpoint);
+          amityMqttEndpoint = AmityRegionalMqttEndpoint.custom(customMqttEndpoint);
+          amitySocketEndpoint = AmityRegionalSocketEndpoint.custom(customSocketEndpoint);
         } else {
           log("please provide custom Endpoint");
         }
@@ -159,8 +155,7 @@ class AmityUIKit {
     log('registerDevice execution time: ${stopwatch.elapsedMilliseconds} ms');
   }
 
-  Future<void> registerNotification(
-      String fcmToken, Function(bool isSuccess, String? error) callback) async {
+  Future<void> registerNotification(String fcmToken, Function(bool isSuccess, String? error) callback) async {
     // example of getting token from firebase
     // FirebaseMessaging messaging = FirebaseMessaging.instance;
     // final fcmToken = await messaging.getToken();
@@ -174,8 +169,7 @@ class AmityUIKit {
     });
   }
 
-  void configAmityThemeColor(
-      BuildContext context, Function(AmityUIConfiguration config) config) {
+  void configAmityThemeColor(BuildContext context, Function(AmityUIConfiguration config) config) {
     var provider = Provider.of<AmityUIConfiguration>(context, listen: false);
     config(provider);
   }
@@ -195,9 +189,7 @@ class AmityUIKit {
 
   Future<void> joinInitialCommunity(List<String> communityIds) async {
     for (var i = 0; i < communityIds.length; i++) {
-      AmitySocialClient.newCommunityRepository()
-          .joinCommunity(communityIds[i])
-          .then((value) {
+      AmitySocialClient.newCommunityRepository().joinCommunity(communityIds[i]).then((value) {
         log("join community:${communityIds[i]} success");
       }).onError((error, stackTrace) {
         log(error.toString());
@@ -208,68 +200,56 @@ class AmityUIKit {
 
 class AmityUIKitProvider extends StatelessWidget {
   final Widget child;
-  const AmityUIKitProvider({Key? key, required this.child}) : super(key: key);
+  const AmityUIKitProvider({
+    Key? key,
+    required this.child,
+    this.communityId,
+  }) : super(key: key);
+  final String? communityId;
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<GlobalFeedBloc>(create: (context) => GlobalFeedBloc()),
+        BlocProvider<GlobalFeedBloc>(
+          create: (context) => GlobalFeedBloc(
+            communityId: communityId,
+          ),
+        ),
         BlocProvider<AmityToastBloc>(create: (context) => AmityToastBloc()),
         BlocProvider<SocialHomeBloc>(create: (context) => SocialHomeBloc()),
-        BlocProvider<CreateStoryPageBloc>(
-            create: (context) => CreateStoryPageBloc()),
+        BlocProvider<CreateStoryPageBloc>(create: (context) => CreateStoryPageBloc()),
         BlocProvider<StoryDraftBloc>(create: (context) => StoryDraftBloc()),
         BlocProvider<HyperlinkBloc>(create: (context) => HyperlinkBloc()),
         BlocProvider<CreateStoryBloc>(create: (context) => CreateStoryBloc()),
-        BlocProvider<StoryVideoPlayerBloc>(
-            create: (context) => StoryVideoPlayerBloc()),
+        BlocProvider<StoryVideoPlayerBloc>(create: (context) => StoryVideoPlayerBloc()),
         MultiProvider(
           providers: [
             ChangeNotifierProvider<ReplyVM>(create: ((context) => ReplyVM())),
-            ChangeNotifierProvider<SearchCommunityVM>(
-                create: ((context) => SearchCommunityVM())),
-            ChangeNotifierProvider<CompoentSizeVM>(
-                create: ((context) => CompoentSizeVM())),
+            ChangeNotifierProvider<SearchCommunityVM>(create: ((context) => SearchCommunityVM())),
+            ChangeNotifierProvider<CompoentSizeVM>(create: ((context) => CompoentSizeVM())),
             ChangeNotifierProvider<UserVM>(create: ((context) => UserVM())),
             ChangeNotifierProvider<AmityVM>(create: ((context) => AmityVM())),
             ChangeNotifierProvider<FeedVM>(create: ((context) => FeedVM())),
-            ChangeNotifierProvider<CommunityVM>(
-                create: ((context) => CommunityVM())),
+            ChangeNotifierProvider<CommunityVM>(create: ((context) => CommunityVM())),
             ChangeNotifierProvider<PostVM>(create: ((context) => PostVM())),
-            ChangeNotifierProvider<UserFeedVM>(
-                create: ((context) => UserFeedVM())),
-            ChangeNotifierProvider<ImagePickerVM>(
-                create: ((context) => ImagePickerVM())),
-            ChangeNotifierProvider<CreatePostVM>(
-                create: ((context) => CreatePostVM())),
-            ChangeNotifierProvider<CreatePostVMV2>(
-                create: ((context) => CreatePostVMV2())),
-            ChangeNotifierProvider<ChannelVM>(
-                create: ((context) => ChannelVM())),
-            ChangeNotifierProvider<AmityUIConfiguration>(
-                create: ((context) => AmityUIConfiguration())),
-            ChangeNotifierProvider<NotificationVM>(
-                create: ((context) => NotificationVM())),
-            ChangeNotifierProvider<CategoryVM>(
-                create: ((context) => CategoryVM())),
-            ChangeNotifierProvider<PendingVM>(
-                create: ((context) => PendingVM())),
-            ChangeNotifierProvider<MyCommunityVM>(
-                create: ((context) => MyCommunityVM())),
-            ChangeNotifierProvider<CommuFeedVM>(
-                create: ((context) => CommuFeedVM())),
-            ChangeNotifierProvider<ExplorePageVM>(
-                create: ((context) => ExplorePageVM())),
-            ChangeNotifierProvider<MemberManagementVM>(
-                create: ((context) => MemberManagementVM())),
-            ChangeNotifierProvider<MediaPickerVM>(
-                create: ((context) => MediaPickerVM())),
-            ChangeNotifierProvider<ChatRoomVM>(
-                create: ((context) => ChatRoomVM())),
+            ChangeNotifierProvider<UserFeedVM>(create: ((context) => UserFeedVM())),
+            ChangeNotifierProvider<ImagePickerVM>(create: ((context) => ImagePickerVM())),
+            ChangeNotifierProvider<CreatePostVM>(create: ((context) => CreatePostVM())),
+            ChangeNotifierProvider<CreatePostVMV2>(create: ((context) => CreatePostVMV2())),
+            ChangeNotifierProvider<ChannelVM>(create: ((context) => ChannelVM())),
+            ChangeNotifierProvider<AmityUIConfiguration>(create: ((context) => AmityUIConfiguration())),
+            ChangeNotifierProvider<NotificationVM>(create: ((context) => NotificationVM())),
+            ChangeNotifierProvider<CategoryVM>(create: ((context) => CategoryVM())),
+            ChangeNotifierProvider<PendingVM>(create: ((context) => PendingVM())),
+            ChangeNotifierProvider<MyCommunityVM>(create: ((context) => MyCommunityVM())),
+            ChangeNotifierProvider<CommuFeedVM>(create: ((context) => CommuFeedVM())),
+            ChangeNotifierProvider<ExplorePageVM>(create: ((context) => ExplorePageVM())),
+            ChangeNotifierProvider<MemberManagementVM>(create: ((context) => MemberManagementVM())),
+            ChangeNotifierProvider<MediaPickerVM>(create: ((context) => MediaPickerVM())),
+            ChangeNotifierProvider<ChatRoomVM>(create: ((context) => ChatRoomVM())),
             ChangeNotifierProvider<ConfigProvider>(
-                key: const ValueKey("global_config"),
-                create: (context) => ConfigProvider()),
+                key: const ValueKey("global_config"), create: (context) => ConfigProvider()),
           ],
         ),
       ],
