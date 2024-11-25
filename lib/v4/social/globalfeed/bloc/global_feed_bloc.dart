@@ -12,22 +12,28 @@ class GlobalFeedBloc extends Bloc<GlobalFeedEvent, GlobalFeedState> {
   late List<AmityPost> posts = [];
   late List<AmityPost> localCreatedPost = [];
 
+  /// if communityId is null, it will fetch global feed
+  final String? communityId;
   final int pageSize = 20;
-  GlobalFeedBloc()
-      : super(const GlobalFeedState(
+  GlobalFeedBloc({
+    required this.communityId,
+  }) : super(const GlobalFeedState(
           list: [],
           hasMoreItems: true,
           isFetching: true,
         )) {
     _controller = PagingController(
-      pageFuture: (token) => AmitySocialClient.newFeedRepository()
-          .getCustomRankingGlobalFeed()
-          .getPagingData(token: token, limit: pageSize),
+      pageFuture: (token) => communityId == null
+          ? AmitySocialClient.newFeedRepository()
+              .getCustomRankingGlobalFeed()
+              .getPagingData(token: token, limit: pageSize)
+          : AmitySocialClient.newFeedRepository()
+              .getCommunityFeed(communityId!)
+              .getPagingData(token: token, limit: pageSize),
       pageSize: pageSize,
     )..addListener(
         () {
-          if (_controller.isFetching == true &&
-              _controller.loadedItems.isEmpty) {
+          if (_controller.isFetching == true && _controller.loadedItems.isEmpty) {
             emit(state.copyWith(isFetching: true));
           } else if (_controller.error == null) {
             // Distinct post list
@@ -47,10 +53,7 @@ class GlobalFeedBloc extends Bloc<GlobalFeedEvent, GlobalFeedState> {
       final postIds = allPost.map((post) => post.postId).toSet();
       allPost.retainWhere((post) => postIds.remove(post.postId));
 
-      emit(state.copyWith(
-          list: allPost,
-          hasMoreItems: _controller.hasMoreItems,
-          isFetching: _controller.isFetching));
+      emit(state.copyWith(list: allPost, hasMoreItems: _controller.hasMoreItems, isFetching: _controller.isFetching));
     });
 
     on<GlobalFeedAddLocalPost>((event, emit) async {
