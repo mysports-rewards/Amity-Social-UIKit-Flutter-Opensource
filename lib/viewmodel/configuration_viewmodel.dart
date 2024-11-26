@@ -93,10 +93,7 @@ class AppColors {
 }
 
 class AmityIconConfig {
-  Widget likeIcon(
-      {double iconSize = 16,
-      Color color = Colors.grey,
-      BlendMode blendmode = BlendMode.srcIn}) {
+  Widget likeIcon({double iconSize = 16, Color color = Colors.grey, BlendMode blendmode = BlendMode.srcIn}) {
     return SvgPicture.asset(
       "assets/Icons/like.svg",
       height: iconSize,
@@ -105,10 +102,7 @@ class AmityIconConfig {
     );
   }
 
-  Widget commentIcon(
-      {double iconSize = 16,
-      Color color = Colors.grey,
-      BlendMode blendmode = BlendMode.srcIn}) {
+  Widget commentIcon({double iconSize = 16, Color color = Colors.grey, BlendMode blendmode = BlendMode.srcIn}) {
     return SvgPicture.asset(
       "assets/Icons/comment.svg",
       height: iconSize,
@@ -117,10 +111,7 @@ class AmityIconConfig {
     );
   }
 
-  Widget officialIcon(
-      {double iconSize = 16,
-      Color color = Colors.grey,
-      BlendMode blendmode = BlendMode.srcIn}) {
+  Widget officialIcon({double iconSize = 16, Color color = Colors.grey, BlendMode blendmode = BlendMode.srcIn}) {
     return SvgPicture.asset(
       "assets/Icons/Checkmark.svg",
       height: iconSize,
@@ -129,10 +120,7 @@ class AmityIconConfig {
     );
   }
 
-  Widget shareIcon(
-      {double iconSize = 16,
-      Color color = Colors.grey,
-      BlendMode blendmode = BlendMode.srcIn}) {
+  Widget shareIcon({double iconSize = 16, Color color = Colors.grey, BlendMode blendmode = BlendMode.srcIn}) {
     return SvgPicture.asset(
       "assets/Icons/share.svg",
       height: iconSize,
@@ -141,10 +129,7 @@ class AmityIconConfig {
     );
   }
 
-  Widget replyIcon(
-      {double iconSize = 16,
-      Color color = Colors.grey,
-      BlendMode blendmode = BlendMode.srcIn}) {
+  Widget replyIcon({double iconSize = 16, Color color = Colors.grey, BlendMode blendmode = BlendMode.srcIn}) {
     return SvgPicture.asset(
       "assets/Icons/reply.svg",
       height: iconSize,
@@ -153,10 +138,7 @@ class AmityIconConfig {
     );
   }
 
-  Widget postIcon(
-      {double iconSize = 16,
-      Color color = Colors.grey,
-      BlendMode blendmode = BlendMode.srcIn}) {
+  Widget postIcon({double iconSize = 16, Color color = Colors.grey, BlendMode blendmode = BlendMode.srcIn}) {
     return SvgPicture.asset(
       "assets/Icons/post.svg",
       height: iconSize,
@@ -165,10 +147,7 @@ class AmityIconConfig {
     );
   }
 
-  Widget editIcon(
-      {double iconSize = 16,
-      Color color = Colors.grey,
-      BlendMode blendmode = BlendMode.srcIn}) {
+  Widget editIcon({double iconSize = 16, Color color = Colors.grey, BlendMode blendmode = BlendMode.srcIn}) {
     return SvgPicture.asset(
       "assets/Icons/edit.svg",
       height: iconSize,
@@ -177,10 +156,7 @@ class AmityIconConfig {
     );
   }
 
-  Widget likedIcon(
-      {double iconSize = 16,
-      Color color = Colors.grey,
-      BlendMode blendmode = BlendMode.srcIn}) {
+  Widget likedIcon({double iconSize = 16, Color color = Colors.grey, BlendMode blendmode = BlendMode.srcIn}) {
     return SvgPicture.asset(
       "assets/Icons/liked.svg",
       height: iconSize,

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/msr_extension/widgets/msr_post_widget.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/community_member_page.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/edit_community.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/setting_page.dart';
@@ -741,15 +742,20 @@ class _StickyHeaderList extends StatelessWidget {
                             stream: vm.getCommunityPosts()[index].listen.stream,
                             initialData: vm.getCommunityPosts()[index],
                             builder: (context, snapshot) {
-                              return PostWidget(
-                                isPostDetail: false,
-                                showCommunity: false,
-                                showlatestComment: true,
-                                isFromFeed: true,
-                                post: snapshot.data!,
-                                theme: theme,
-                                postIndex: index,
-                                feedType: FeedType.community,
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                ),
+                                child: MsrPostWidget(
+                                  isPostDetail: false,
+                                  showCommunity: false,
+                                  showlatestComment: true,
+                                  isFromFeed: true,
+                                  post: snapshot.data!,
+                                  theme: theme,
+                                  postIndex: index,
+                                  feedType: FeedType.community,
+                                ),
                               );
                             });
                       },
