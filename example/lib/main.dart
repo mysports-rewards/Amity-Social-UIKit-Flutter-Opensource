@@ -34,10 +34,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          // textTheme: GoogleFonts.almendraDisplayTextTheme(),
-          ),
+    return const MaterialApp(
       title: 'Flutter Demo',
       home: const MyHomePage(),
     );
@@ -172,14 +169,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   final prefs = await SharedPreferences.getInstance();
 
                   await prefs.setString('apiKey', _apiKey.text);
-                  await prefs.setString(
-                      'selectedRegion', _selectedRegion.toString());
+                  await prefs.setString('selectedRegion', _selectedRegion.toString());
                   await prefs.setBool('isCheckboxChecked', _isCheckboxChecked);
 
                   if (_selectedRegion == AmityEndpointRegion.custom) {
                     await prefs.setString('customUrl', _customHttpUrl.text);
-                    await prefs.setString(
-                        'customSocketUrl', _customSocketUrl.text);
+                    await prefs.setString('customSocketUrl', _customSocketUrl.text);
                     await prefs.setString('customMqttUrl', _customMqttUrl.text);
                   }
                   log("save pref");
@@ -216,6 +211,8 @@ class AmityApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AmityUIKitProvider(
+      themeDataLight: MsrAppTheme.themeData(context),
+      themeDataDark: MsrAppTheme.themeDataDark(context),
       child: Builder(builder: (context2) {
         return UserListPage(
           isCheckboxChecked: isCheckboxChecked,
@@ -249,9 +246,7 @@ class _UserListPageState extends State<UserListPage> {
   _checkSession() async {
     AmityUIKit().observeSessionState().listen((event) {
       if (event == SessionState.Established) {
-        final username = AmityUIKit().getCurrentUser().displayName ??
-            AmityUIKit().getCurrentUser().userId ??
-            "";
+        final username = AmityUIKit().getCurrentUser().displayName ?? AmityUIKit().getCurrentUser().userId ?? "";
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const Scaffold(body: CommunityPage()),
         ));
@@ -319,14 +314,12 @@ class _UserListPageState extends State<UserListPage> {
                           //ignore call back
                         } else {
                           log("fail");
-                          AmityDialog().showAlertErrorDialog(
-                              title: "Error", message: error.toString());
+                          AmityDialog().showAlertErrorDialog(title: "Error", message: error.toString());
                         }
                       },
                     );
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          const Scaffold(body: CommunityPage()),
+                      builder: (context) => const Scaffold(body: CommunityPage()),
                     ));
                   },
                   onTap: () async {
@@ -343,14 +336,12 @@ class _UserListPageState extends State<UserListPage> {
                           log("success");
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  SecondPage(username: _usernames[index]),
+                              builder: (context) => SecondPage(username: _usernames[index]),
                             ),
                           );
                         } else {
                           log("fail");
-                          AmityDialog().showAlertErrorDialog(
-                              title: "Error", message: error.toString());
+                          AmityDialog().showAlertErrorDialog(title: "Error", message: error.toString());
                         }
                       },
                     );
@@ -593,8 +584,7 @@ class SocialPage extends StatelessWidget {
                 onTap: () {
                   // Navigate or perform action based on 'Newsfeed' tap
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        const Scaffold(body: GlobalFeedScreen()),
+                    builder: (context) => const Scaffold(body: GlobalFeedScreen()),
                   ));
                 },
               ),
@@ -603,8 +593,7 @@ class SocialPage extends StatelessWidget {
                 onTap: () {
                   // Navigate or perform action based on 'Newsfeed' tap
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        const Scaffold(body: CreateCommunityPage()),
+                    builder: (context) => const Scaffold(body: CreateCommunityPage()),
                   ));
                 },
               ),
@@ -654,15 +643,12 @@ class SocialPage extends StatelessWidget {
                 ),
                 onTap: () async {
                   CommunityGetQueryBuilder communityGetQueryBuilder =
-                      AmitySocialClient.newCommunityRepository()
-                          .getCommunities();
-                  AmityCommunity amityCommunity = await communityGetQueryBuilder
-                      .useCase.communityRepo
-                      .getCommunity(amityCommunityTextCon.text);
+                      AmitySocialClient.newCommunityRepository().getCommunities();
+                  AmityCommunity amityCommunity =
+                      await communityGetQueryBuilder.useCase.communityRepo.getCommunity(amityCommunityTextCon.text);
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => CommunityScreen(
-                          isFromFeed: true, community: amityCommunity),
+                      builder: (context) => CommunityScreen(isFromFeed: true, community: amityCommunity),
                     ),
                   );
                 },

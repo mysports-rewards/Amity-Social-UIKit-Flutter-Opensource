@@ -12,6 +12,7 @@ class GlobalFeedBloc extends Bloc<GlobalFeedEvent, GlobalFeedState> {
   late List<AmityPost> posts = [];
   late List<AmityPost> localCreatedPost = [];
 
+  /// if communityId is null, it will fetch global feed
   final int pageSize = 20;
   GlobalFeedBloc()
       : super(const GlobalFeedState(
@@ -26,8 +27,7 @@ class GlobalFeedBloc extends Bloc<GlobalFeedEvent, GlobalFeedState> {
       pageSize: pageSize,
     )..addListener(
         () {
-          if (_controller.isFetching == true &&
-              _controller.loadedItems.isEmpty) {
+          if (_controller.isFetching == true && _controller.loadedItems.isEmpty) {
             emit(state.copyWith(isFetching: true));
           } else if (_controller.error == null) {
             // Distinct post list
@@ -47,10 +47,7 @@ class GlobalFeedBloc extends Bloc<GlobalFeedEvent, GlobalFeedState> {
       final postIds = allPost.map((post) => post.postId).toSet();
       allPost.retainWhere((post) => postIds.remove(post.postId));
 
-      emit(state.copyWith(
-          list: allPost,
-          hasMoreItems: _controller.hasMoreItems,
-          isFetching: _controller.isFetching));
+      emit(state.copyWith(list: allPost, hasMoreItems: _controller.hasMoreItems, isFetching: _controller.isFetching));
     });
 
     on<GlobalFeedAddLocalPost>((event, emit) async {

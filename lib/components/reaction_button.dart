@@ -22,7 +22,10 @@ class ReactionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var buttonStyle = ButtonStyle(
       padding: WidgetStateProperty.all<EdgeInsets>(
-          const EdgeInsets.only(top: 6, bottom: 6, left: 0, right: 12)),
+        const EdgeInsets.all(
+          0,
+        ),
+      ),
       minimumSize: WidgetStateProperty.all<Size>(Size.zero),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
@@ -52,26 +55,19 @@ class ReactionWidget extends StatelessWidget {
                         onPressed: () {
                           print(post.myReactions);
                           HapticFeedback.heavyImpact();
-                          Provider.of<PostVM>(context, listen: false)
-                              .removePostReaction(post);
+                          Provider.of<PostVM>(context, listen: false).removePostReaction(post);
                         },
                         style: buttonStyle,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Provider.of<AmityUIConfiguration>(context)
-                                .iconConfig
-                                .likedIcon(
-                                  color:
-                                      Provider.of<AmityUIConfiguration>(context)
-                                          .primaryColor,
+                            Provider.of<AmityUIConfiguration>(context).iconConfig.likedIcon(
+                                  color: Provider.of<AmityUIConfiguration>(context).primaryColor,
                                 ),
                             Text(
                               ' Liked',
                               style: TextStyle(
-                                color:
-                                    Provider.of<AmityUIConfiguration>(context)
-                                        .primaryColor,
+                                color: Provider.of<AmityUIConfiguration>(context).primaryColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: feedReactionCountSize,
                               ),
@@ -84,31 +80,22 @@ class ReactionWidget extends StatelessWidget {
                           onPressed: () {
                             print(post.myReactions);
                             HapticFeedback.heavyImpact();
-                            Provider.of<PostVM>(context, listen: false)
-                                .addPostReaction(post);
+                            Provider.of<PostVM>(context, listen: false).addPostReaction(post);
                           },
                           style: buttonStyle,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Provider.of<AmityUIConfiguration>(context)
-                                  .iconConfig
-                                  .likeIcon(
+                              Provider.of<AmityUIConfiguration>(context).iconConfig.likeIcon(
                                     color: feedType == FeedType.user
-                                        ? Provider.of<AmityUIConfiguration>(
-                                                context)
-                                            .appColors
-                                            .userProfileTextColor
+                                        ? Provider.of<AmityUIConfiguration>(context).appColors.userProfileTextColor
                                         : Colors.grey,
                                   ),
                               Text(
                                 ' Like',
                                 style: TextStyle(
                                   color: feedType == FeedType.user
-                                      ? Provider.of<AmityUIConfiguration>(
-                                              context)
-                                          .appColors
-                                          .userProfileTextColor
+                                      ? Provider.of<AmityUIConfiguration>(context).appColors.userProfileTextColor
                                       : Colors.grey,
                                   fontSize: feedReactionCountSize,
                                   letterSpacing: 1,
